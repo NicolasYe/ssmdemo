@@ -5,10 +5,11 @@ import com.yexu.ssmdemo.pojo.*;
 import com.yexu.ssmdemo.service.exceptions.UserException;
 import com.yexu.ssmdemo.service.interfaces.IUserService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserService implements IUserService {
@@ -194,6 +195,23 @@ public class UserService implements IUserService {
             e.printStackTrace();
             throw new UserException(e.getMessage());
         }
+    }
+
+    @Override
+    public MultiValueMap<String, String> selectAllUserAndDevice(String city) {
+        List<User> users=userMapper.selectUserAndDevice();
+        MultiValueMap<String, String> stringMultiValueMap = new LinkedMultiValueMap<>();
+        for (User user : users) {
+            stringMultiValueMap.add(user.getUsername(), user.getDeviceAndUser().getDevice().getDevice_id());
+        }
+//        Set<String> keySet = stringMultiValueMap.keySet();
+//        for (String key : keySet) {
+//            System.out.println(key);
+//            List<String> values = stringMultiValueMap.get(key);
+//            System.out.println(StringUtils.join(values, " ") + ":" + key);
+//        }
+
+        return stringMultiValueMap;
     }
 
 }

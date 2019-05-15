@@ -96,5 +96,5 @@ public interface UserMapper {
      */
     List<User> selectUserAndDevice();
 
-    StudentClass selectStudent(Integer classId);
+//    StudentClass selectStudent(Integer classId);
 }

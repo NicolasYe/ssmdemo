@@ -95,7 +95,6 @@ public class TestUser {
 
     @Test
     public void testSelectUserAndDevice() {
-        Map<String, List<String>> map = new HashMap<>();
 //        Map<String,List<String>> userDeviceMap=new HashMap<String,List<String>>();
         ApplicationContext application = new ClassPathXmlApplicationContext("application-dao.xml");
         UserMapper um = application.getBean("userMapper", UserMapper.class);
@@ -115,7 +114,7 @@ public class TestUser {
 //            List<String> values = stringMultiValueMap.get(key);
 //            System.out.println(StringUtils.join(values, " ") + ":" + key);
         }
-        System.out.println(keySet.size());
+//        System.out.println(keySet.size());
 //        deviceIds.add(users.get(0).getDeviceAndUser().getDevice().getDevice_id());
 //        userDeviceMap.put(users.get(0).getUsername(),deviceIds);
 //        for(int i=1;i<users.size();i++){
@@ -134,8 +133,8 @@ public class TestUser {
     public void testSelectStudent() {
         ApplicationContext application = new ClassPathXmlApplicationContext("application-dao.xml");
         UserMapper um = application.getBean("userMapper", UserMapper.class);
-        StudentClass studentClass = um.selectStudent(1);
-        System.out.println(studentClass.toString());
+//        StudentClass studentClass = um.selectStudent(1);
+//        System.out.println(studentClass.toString());
     }
 
 }

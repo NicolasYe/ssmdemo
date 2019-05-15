@@ -4,11 +4,13 @@ import com.yexu.ssmdemo.pojo.*;
 import com.yexu.ssmdemo.service.interfaces.IUserService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.Set;
 
 @Controller
 public class UserController {
@@ -190,5 +192,14 @@ public class UserController {
             e.printStackTrace();
             return new ResponseResult<>(0,e.getMessage());
         }
+    }
+
+    @RequestMapping("getAllUserCorrespondDeviceBycity")
+    @ResponseBody
+    public ResponseResult<MultiValueMap<String, String>> getAllUserCorrespondDevice(@Param("city") String city){
+        System.out.println(city);
+        MultiValueMap<String, String> resultMap= iUserService.selectAllUserAndDevice(city);
+
+        return new ResponseResult<>(0,resultMap);
     }
 }
