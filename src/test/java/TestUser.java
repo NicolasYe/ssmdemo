@@ -111,9 +111,11 @@ public class TestUser {
         }
         Set<String> keySet = stringMultiValueMap.keySet();
         for (String key : keySet) {
-            List<String> values = stringMultiValueMap.get(key);
-            System.out.println(StringUtils.join(values, " ") + ":" + key);
+            System.out.println(key);
+//            List<String> values = stringMultiValueMap.get(key);
+//            System.out.println(StringUtils.join(values, " ") + ":" + key);
         }
+        System.out.println(keySet.size());
 //        deviceIds.add(users.get(0).getDeviceAndUser().getDevice().getDevice_id());
 //        userDeviceMap.put(users.get(0).getUsername(),deviceIds);
 //        for(int i=1;i<users.size();i++){

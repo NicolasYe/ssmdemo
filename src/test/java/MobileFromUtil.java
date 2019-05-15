@@ -14,10 +14,9 @@ import java.util.regex.Pattern;
  */
 public class MobileFromUtil {
     //正则表达式,抽取手机归属地
-    public static final String REGEX_GET_MOBILE=
-//            "(?is)(<tr[^>]+>[\\s]*<td[^>]+>[\\s]*卡号归属地[\\s]*</td>[\\s]*<td[^>]+>([^<]+)</td>[\\s]*</tr>)"; //2:from
-            "(?is)()";
-    //正则表达式,审核要获取手机归属地的手机是否符合格式,可以只输入手机号码前7位
+    public static final String REGEX_GET_MOBILE= "" +
+            "(?is)(<tr[^\\u4e00-\\u9fa5]*卡号归属地</td>[\\S]*[\\u4e00-\\u9fa5]*&nbsp;[\\u4e00-\\u9fa5]*</td></tr>)";
+    //正则表达式,审核要获取手机归属地的手机是否符合格式,可以只输入手机 号码前7位
     public static final String REGEX_IS_MOBILE=
             "(?is)(^1[3|4|5|8][0-9]\\d{4,8}$)";
 
@@ -50,8 +49,6 @@ public class MobileFromUtil {
 //            mobileParameter=new NameValuePair("mobile",mobileNumber);
 //            actionParameter=new NameValuePair("action","mobile");
 //            method.setRequestBody(new NameValuePair[] { actionParameter,mobileParameter });
-//            method.setRequestHeader("mobile",mobileNumber);
-//            method.setRequestHeader("action","mobile");
             //设置编码
             method.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET, "GB2312");
             client.executeMethod(method);
@@ -66,7 +63,7 @@ public class MobileFromUtil {
             if(htmlSource!=null&&!htmlSource.equals("")){
                 htmlSource=htmlSource.replaceAll("\\s*", "");
                 System.out.println(htmlSource);
-//                result=parseMobileFrom(htmlSource);
+                result=parseMobileFrom(htmlSource);
 //                JSONObject json=new JSONObject(htmlSource);
 //                System.out.println("key: status"+" "+"values:"+json.getString("status"));
             }
@@ -89,21 +86,14 @@ public class MobileFromUtil {
      * @return
      */
     public static String parseMobileFrom(String htmlSource){
-        Pattern p=null;
-        Matcher m=null;
         String result=null;
-
-        p=Pattern.compile(REGEX_GET_MOBILE);
-        m=p.matcher(htmlSource);
-
-        while(m.find()){
-            if(m.start(2)>0){
-                result=m.group(2);
-                result=result.replaceAll("&nbsp;", " ");
-            }
+        String regEx = "[\\u4e00-\\u9fa5]*&nbsp;[\\u4e00-\\u9fa5]*</td></tr>";
+        Pattern pattern = Pattern.compile(regEx,Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(htmlSource);
+        if(matcher.find()){
+            result=matcher.group().replaceAll("&nbsp;","");
+            result=result.substring(0,result.toLowerCase().indexOf("</td></tr>"));
         }
-
-
         return result;
 
     }
@@ -129,7 +119,7 @@ public class MobileFromUtil {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-        System.out.println(getMobileFrom("15861891135"));
+        System.out.println(getMobileFrom("13587155281"));
     }
 
 }
