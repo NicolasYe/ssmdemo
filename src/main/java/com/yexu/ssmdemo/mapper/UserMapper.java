@@ -2,6 +2,7 @@ package com.yexu.ssmdemo.mapper;
 
 import com.yexu.ssmdemo.pojo.Device;
 import com.yexu.ssmdemo.pojo.Experience;
+import com.yexu.ssmdemo.pojo.StudentClass;
 import com.yexu.ssmdemo.pojo.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -88,4 +89,12 @@ public interface UserMapper {
     Boolean deleteRecord(Integer id);
 
     Boolean deleteAllRecord(Integer userId);
+
+    /**
+     * 查找所有用户和对应的device
+     * @return
+     */
+    List<User> selectUserAndDevice();
+
+    StudentClass selectStudent(Integer classId);
 }

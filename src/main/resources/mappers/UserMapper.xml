@@ -60,4 +60,64 @@
     <delete id="deleteAllRecord">
         delete from app_user_record where user_id=#{userId}
     </delete>
+
+
+    <select id="selectUserAndDevice" resultMap="userAndDevice">
+        select au.username,ad.device_id from app_device ad
+                inner join app_device_user adu on
+                ad.id=adu.id inner join app_user au on
+                adu.user_id=au.id
+                order by au.username
+    </select>
+    <resultMap id="userAndDevice" type="com.yexu.ssmdemo.pojo.User">
+        <id column="id" property="id"></id>
+        <result column="username" property="username"></result>
+        <result column="password" property="password"></result>
+        <result column="head_portrait" property="head_portrait"></result>
+        <result column="real_name" property="real_name"></result>
+        <result column="sex" property="sex"></result>
+        <result column="age" property="age"></result>
+        <result column="optician_left" property="optician_left"></result>
+        <result column="optician_right" property="optician_right"></result>
+        <result column="naked_left" property="naked_left"></result>
+        <result column="naked_right" property="naked_right"></result>
+        <result column="naked" property="naked"></result>
+        <result column="wear_left" property="wear_left"></result>
+        <result column="wear_right" property="wear_right"></result>
+        <result column="interpupillary_distance" property="interpupillary_distance"></result>
+        <result column="shcool" property="shcool"></result>
+        <result column="address" property="address"></result>
+        <result column="shop_code" property="shop_code"></result>
+        <result column="register_id" property="register_id"></result>
+        <result column="balance" property="balance"></result>
+        <result column="register_id" property="register_id"></result>
+        <result column="create_time" property="create_time"></result>
+        <result column="validate_code" property="validate_code"></result>
+        <association property="deviceAndUser" javaType="com.yexu.ssmdemo.pojo.DeviceAndUser">
+            <id column="id" property="id"></id>
+            <result column="user_id" property="user_id"></result>
+            <association property="device" javaType="com.yexu.ssmdemo.pojo.Device">
+                <id column="id" property="id"></id>
+                <result column="device_id" property="device_id"></result>
+                <result column="pid" property="pid"></result>
+                <result column="system_type" property="system_type"></result>
+                <result column="system_version" property="system_version"></result>
+                <result column="device_name" property="device_name"></result>
+                <result column="regiter_time" property="regiter_time"></result>
+            </association>
+        </association>
+    </resultMap>
+
+    <select id="selectStudent" resultMap="stuClassMap">
+      select c.*,s.* from student s inner join studentclass c on s.classId=c.classId where c.classId=#{classId}
+    </select>
+    <resultMap id="stuClassMap" type="com.yexu.ssmdemo.pojo.StudentClass">
+        <id column="classId" property="classId"></id>
+        <result column="className" property="className"></result>
+        <collection property="students" ofType="com.yexu.ssmdemo.pojo.Student">
+            <id column="stuno" property="stuno"></id>
+            <result column="name" property="name"></result>
+            <result column="classId" property="classId"></result>
+        </collection>
+    </resultMap>
 </mapper>
